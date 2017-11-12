@@ -1,0 +1,165 @@
+---
+title: "Web Scrapping"
+author: "Justin Ho"
+date: "11/12/2017"
+output: ioslides_presentation
+---
+
+# Loading Library
+----
+```{r library}
+library('rvest')
+library('magrittr')
+```
+
+## Downloading the Website
+Specifying the url for desired website to be scrapped and reading the HTML code from the website
+```{r}
+url <- 'http://www.imdb.com/search/title?count=100&release_date=2017,2017&title_type=feature'
+webpage <- read_html(url)
+webpage
+```
+
+# Extracting Data
+## Rankings
+Using CSS selectors to scrap the rankings section
+```{r}
+rank_data_html <- html_nodes(webpage,'.text-primary') # Using CSS selector to select Ranks
+```
+
+Get the text, then turn to numberic
+```{r}
+rank_data_html
+rank_data <- html_text(rank_data_html) %>% as.numeric() 
+head(rank_data)
+```
+
+## Title
+Same thing
+```{r}
+title_data_html <- html_nodes(webpage,'.lister-item-header a') # Using CSS selector to select Titles
+title_data <- html_text(title_data_html) # Extracting the text
+head(title_data)
+```
+
+## Description
+```{r}
+description_data_html <- html_nodes(webpage,'.ratings-bar+ .text-muted')
+description_data <- html_text(description_data_html)
+head(description_data)
+```
+
+----
+
+Data-Preprocessing: removing "\\\ n""
+```{r}
+description_data<-gsub("\n","",description_data)
+head(description_data)
+```
+
+## Movie runtime
+```{r}
+runtime_data_html <- html_nodes(webpage,'.text-muted .runtime')
+runtime_data <- html_text(runtime_data_html)
+head(runtime_data)
+```
+
+----
+
+Data-Preprocessing: removing mins and converting it to numerical
+```{r}
+runtime_data<-gsub(" min","",runtime_data) # Removing mins 
+runtime_data<-as.numeric(runtime_data)
+head(runtime_data)
+```
+
+## Genre
+```{r}
+genre_data_html <- html_nodes(webpage,'.genre')
+genre_data <- html_text(genre_data_html)
+genre_data<-gsub("\n","",genre_data)
+genre_data<-gsub(" ","",genre_data)
+genre_data<-gsub(",.*","",genre_data)
+head(genre_data)
+```
+
+## Rating
+```{r}
+rating_data_html <- html_nodes(webpage,'.ratings-imdb-rating strong')
+rating_data <- html_text(rating_data_html)
+rating_data<-as.numeric(rating_data)
+head(rating_data)
+```
+
+## Metascore
+```{r}
+metascore_data_html <- html_nodes(webpage,'.metascore')
+metascore_data <- html_text(metascore_data_html)
+metascore_data<-gsub(" ","",metascore_data)
+head(metascore_data)
+```
+
+Let's check the length of metascore data
+```{r}
+length(metascore_data)
+```
+
+There are missing data!
+
+## Better approach
+Instead of grabing each element one by one. Splitting the who webpage into chuncks.
+```{r}
+split_html <- html_nodes(webpage,'.lister-item-content') 
+(split_html[1])
+```
+
+----
+
+For each chunck, use if...else statement to extract the data and put NA if no data can be extracted.
+```{r}
+metascore_data_test <- c()
+for (i in 1:length(split_html)){ # Looping over all the chuncks one by one
+  if (length(html_nodes(split_html[i],'.metascore')) == 0){ # If the length of the extracted data equals to zero, put NA
+    metascore_data_item <- NA
+  } else {
+    metascore_data_item <- html_nodes(split_html[i],'.metascore') %>% html_text() # Extract the data if the length is not zero
+  }
+  metascore_data_test <- c(metascore_data_test, metascore_data_item) # concatenate the data into a list
+}
+metascore_data_test<-gsub(" ","",metascore_data_test) # erase the white space
+length(metascore_data_test)
+```
+
+## Even better approach
+If you have to repeat the codes, write a function!
+
+```{r}
+node_or_na <- function( x , node ){
+  final_list <- c()
+  for (i in 1:length(x)){
+    if (length(html_nodes(x[i],node)) == 0){
+      list_item <- NA
+    } else {
+      list_item <- html_nodes(x[i],node) %>% html_text()
+    }
+    final_list <- c(final_list, list_item)
+  }
+  return(final_list)
+}
+```
+
+----
+Use the function to extract
+```{r}
+metascore_data <- node_or_na(split_html,'.metascore')
+metascore_data <- gsub(" ","",metascore_data_test)
+metascore_data
+length(metascore_data)
+```
+
+## Creating a data frame
+```{r, warning=FALSE}
+df <- cbind(rank_data, title_data, description_data, genre_data, rating_data, runtime_data, metascore_data) %>% 
+  as.data.frame()
+head(df)
+```
