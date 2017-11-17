@@ -1,4 +1,4 @@
-# Web Scrapping
+# Introduction to Web Scrapping
 Justin Ho  
 11/12/2017  
 
