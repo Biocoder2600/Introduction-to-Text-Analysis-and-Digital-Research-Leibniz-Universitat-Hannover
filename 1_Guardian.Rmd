@@ -1,0 +1,54 @@
+---
+title: "Guardian"
+author: "Justin Ho"
+date: "12/4/2017"
+output:
+  html_document:
+    keep_md: true
+    self_contained: true
+---
+
+Install the package
+```{r, eval=FALSE}
+install.packages("GuardianR")
+```
+
+
+Load the package
+```{r}
+library(GuardianR)
+```
+
+
+Simply use the get_guardian function.
+```{r}
+articles <- get_guardian(keywords = "Germany",
+                         section = "world",
+                         from.date = "2017-11-01",
+                         to.date = "2017-12-01",
+                         api.key = "cd428c88-1153-4281-9806-4cc5e674fe6d")
+
+```
+
+
+See what's inside
+```{r}
+str(articles)
+```
+
+
+Clear the html tags
+```{r}
+articles$body <- iconv(articles$body, "", "ASCII", "byte")
+articles$body <- gsub("<.*?>", "", articles$body)
+```
+
+
+Quick analysis with quanteda
+```{r, warning=FALSE}
+library(quanteda)
+corpus <- corpus(articles, text_field = "body")
+dfm <- dfm(corpus, remove = stopwords("english"), remove_punct = TRUE)
+topfeatures(dfm, 50)
+textplot_wordcloud(dfm)
+```
