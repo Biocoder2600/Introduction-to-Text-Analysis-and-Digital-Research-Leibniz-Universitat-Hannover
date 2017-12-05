@@ -182,10 +182,8 @@ node_or_na <- function(x,node){
   return(final_list)
 }
 
-metascore_data <- node_or_na(test,'.metascore')
+metascore_data <- node_or_na(split_html,'.metascore')
 metascore_data_test<-gsub(" ","",metascore_data_test)
 metascore_data_test
-
-gross_data <- node_or_na(test, ".ghost~ .text-muted+ span")
 
 df <- cbind(rank_data, title_data, description_data, genre_data, rating_data, runtime_data, votes_data, directors_data, metascore_data, gross_data) %>% as.data.frame()
