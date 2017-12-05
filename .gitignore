@@ -6,3 +6,4 @@
 *.RData
 *.zip
 data/*/*
+HID_*.*
