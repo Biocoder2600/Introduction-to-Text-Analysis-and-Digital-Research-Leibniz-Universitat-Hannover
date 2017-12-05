@@ -20,6 +20,8 @@ library(GuardianR)
 ```
 
 
+Go to http://open-platform.theguardian.com/ and register for an api.key.
+
 Simply use the get_guardian function.
 ```{r}
 articles <- get_guardian(keywords = "Germany",

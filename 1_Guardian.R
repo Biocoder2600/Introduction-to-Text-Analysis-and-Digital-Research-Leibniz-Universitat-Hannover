@@ -2,11 +2,13 @@ install.packages("GuardianR")
 
 library(GuardianR)
 
+# Go to http://open-platform.theguardian.com/ and register for an api.key.
+
 articles <- get_guardian(keywords = "Germany",
                          section = "world",
                          from.date = "2017-11-01",
                          to.date = "2017-12-01",
-                         api.key = "cd428c88-1153-4281-9806-4cc5e674fe6d")
+                         api.key = "xxxxxxxxxx")
 
 str(articles)
 
