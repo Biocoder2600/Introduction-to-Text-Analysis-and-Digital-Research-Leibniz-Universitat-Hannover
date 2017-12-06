@@ -4,5 +4,5 @@ A repository for the course, Introduction to Text Analysis and Digital Research,
 
 ## Lecturer
 Justin Chun-ting Ho
-## Tutor
+## Tutor/Organizer
 Philipp Meyer
