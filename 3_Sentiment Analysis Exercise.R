@@ -25,6 +25,7 @@ docvars(book4, "Book") <- "4"
 book5 <- readtext(file.path("data", "book5", "*.html")) %>% corpus()
 docvars(book5, "Book") <- "5"
 
+books_corpus <- corpus(c(book1, book2, book3, book4, book5)) 
 
 
 
@@ -39,4 +40,8 @@ docvars(book5, "Book") <- "5"
 
 # Plotting it
 
+
+# Advanced Challenges:
+# 1. Try other lexicons. There are three sources: "afinn", "bing", and "nrc".
+# 2. Why the result of book 5 looks so weird? Try to solve it!
 
