@@ -2,6 +2,8 @@
 Justin Ho  
 10/11/2017  
 
+# This is a title
+
 
 
 R is simply a calculator, you can perform simple computation by typing the equation.
@@ -17,7 +19,7 @@ R is simply a calculator, you can perform simple computation by typing the equat
 You can define a new object with the assignment operator "<-".
 
 ```r
-result <- 3+4
+result <- 3+4+1
 ```
 
 When defining a object, nothing will happen when sucessful (no news is good news). To view the object, you can simply type the name of the object.
@@ -27,13 +29,13 @@ result
 ```
 
 ```
-## [1] 7
+## [1] 8
 ```
 
 You can also put string inside an object, remember the quotation mark.
 
 ```r
-text <- "This is a test message"
+text <- "This is a test message again"
 ```
 
 To view it, type the name of the object.
@@ -43,18 +45,18 @@ text
 ```
 
 ```
-## [1] "This is a test message"
+## [1] "This is a test message again"
 ```
 
 A vector is a sequence of data elements, we can use "c()" to define a vector.
 
 ```r
-vector <- c(1, 2, 5, 7, 8, 9, 10)
+vector <- c(1, 2, 5, 7, 8, 9, 10, 100)
 vector
 ```
 
 ```
-## [1]  1  2  5  7  8  9 10
+## [1]   1   2   5   7   8   9  10 100
 ```
 
 You can access a particular compenent of a vector (or many other object types) by using the slicing operator "[]".
@@ -88,7 +90,7 @@ vector[-1] # It shows all the elements EXCEPT the first one.
 ```
 
 ```
-## [1]  2  5  7  8  9 10
+## [1]   2   5   7   8   9  10 100
 ```
 
 A function is a group of prewritten codes, it takes in data and produces output. For example, "summary()" is a often used function.
@@ -99,17 +101,17 @@ summary(vector)
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     1.0     3.5     7.0     6.0     8.5    10.0
+##    1.00    4.25    7.50   17.75    9.25  100.00
 ```
 
 If you are calling a gigatic object, you don't want to mess up your screen, you might use "head()" to shows the first few components/lines.
 
 ```r
-head(vector)
+tail(vector, 3)
 ```
 
 ```
-## [1] 1 2 5 7 8 9
+## [1]   9  10 100
 ```
 
 To know what a function does, use "?" .
@@ -167,12 +169,12 @@ summary(textvector)
 You can nest the function like this.
 
 ```r
-summary(head(vector))
+summary(head(vector, 2))
 ```
 
 ```
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   1.000   2.750   6.000   5.333   7.750   9.000
+##    1.00    1.25    1.50    1.50    1.75    2.00
 ```
 
 Alternatively, if you load the magrittr package, you can pipe it. It does the same thing, but is written in a slightly amiable way.
