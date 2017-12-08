@@ -48,3 +48,6 @@ pr <- predict(ws, rescaling = "lbg")
 summary(pr)
 
 textplot_scale1d(pr)
+
+textplot_scale1d(pr, doclabels = NULL,
+                 groups = docvars(corpus, "party"))

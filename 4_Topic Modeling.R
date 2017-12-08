@@ -78,7 +78,7 @@ end.time <- Sys.time()
 print(end.time - start.time)
 
 # # You may want to save the .RData since it took so long to run
-# save.image("~/GitHub/Hanover Source/gottopicmodels.RData")
+save.image("gottopicmodels.RData")
 
 # See the terms
 get_terms(results_lda, k=20)

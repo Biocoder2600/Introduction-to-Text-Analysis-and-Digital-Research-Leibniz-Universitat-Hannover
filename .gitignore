@@ -8,3 +8,5 @@
 data/*/*
 HID_*.*
 .httr-oauth
+kwds.png
+*.png

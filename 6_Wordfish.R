@@ -55,3 +55,4 @@ textplot_scale1d(wfm, margin = "features",
 # Plot estimated document positions
 textplot_scale1d(wfm, doclabels = NULL,
                  groups = docvars(corpus, "party"))
+
