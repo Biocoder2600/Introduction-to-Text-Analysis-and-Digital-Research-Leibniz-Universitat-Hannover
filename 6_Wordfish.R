@@ -47,9 +47,9 @@ textplot_scale1d(wfm)
 
 # Plot estimated word positions
 textplot_scale1d(wfm, margin = "features", 
-                 highlighted = c("government", "global", "children", 
-                                 "bank", "economy", "the", "citizenship",
-                                 "productivity", "deficit"), 
+                 highlighted = c("government", "labour", "children", 
+                                 "bank", "economy", "democracy", "citizenship",
+                                 "job", "deficit", "stable", "april"), 
                  highlighted_color = "red")
 
 # Plot estimated document positions
